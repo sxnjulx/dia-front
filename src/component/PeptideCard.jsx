@@ -1,77 +1,43 @@
+import { Atom } from 'lucide-react';
+import React from 'react';
+
 const PeptideCard = ({ peptide, index }) => {
+  const { sequence, charge, precursorMz, score } = peptide;
+
   return (
-    <div className="group relative overflow-hidden bg-gradient-to-br from-white via-purple-50 to-blue-50 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-purple-100 hover:border-purple-300">
-      {/* Animated background pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-400 to-blue-400 rounded-full -translate-x-16 -translate-y-16 group-hover:scale-110 transition-transform duration-500"></div>
-        <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-blue-400 to-indigo-400 rounded-full translate-x-12 translate-y-12 group-hover:scale-110 transition-transform duration-500"></div>
-      </div>
-      
-      <div className="relative p-6">
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-              <Atom className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-gray-800 mb-1">
-                Peptide #{index + 1}
-              </h3>
-              <p className="text-sm text-purple-600 font-medium">
-                {peptide.sequence || 'Unknown Sequence'}
-              </p>
-            </div>
-          </div>
-          <div className="text-right">
-            <div className="text-xs text-gray-500 uppercase tracking-wide font-semibold">Score</div>
-            <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-              {peptide.score?.toFixed(2) || 'N/A'}
-            </div>
-          </div>
+    <div
+      className="relative overflow-hidden rounded-3xl p-6 bg-gradient-to-br
+                 from-purple-800/50 via-purple-700/40 to-indigo-700/40
+                 border border-white/20 shadow-xl backdrop-blur-lg"
+    >
+      {/* animated glow */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 blur-2xl opacity-30 animate-pulse" />
+
+      <div className="relative z-10 flex items-start gap-4">
+        <div className="shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center bg-purple-600/60">
+          <Atom className="w-6 h-6 text-white" />
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mb-4">
-          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-3 border border-purple-100">
-            <div className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">Mass</div>
-            <div className="text-lg font-bold text-gray-800">{peptide.mass?.toFixed(4) || 'N/A'}</div>
-          </div>
-          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-3 border border-blue-100">
-            <div className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">Charge</div>
-            <div className="text-lg font-bold text-gray-800">{peptide.charge || 'N/A'}</div>
-          </div>
-        </div>
-
-        {peptide.modifications && peptide.modifications.length > 0 && (
-          <div className="mb-4">
-            <div className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-2">Modifications</div>
-            <div className="flex flex-wrap gap-1">
-              {peptide.modifications.map((mod, idx) => (
-                <span
-                  key={idx}
-                  className="px-2 py-1 bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 text-xs rounded-full border border-purple-200"
-                >
-                  {mod}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="flex items-center justify-between">
-          <div className="text-xs text-gray-500">
-            RT: {peptide.retentionTime?.toFixed(2) || 'N/A'} min
-          </div>
-          <div className="flex items-center gap-1">
-            <Zap className="w-3 h-3 text-purple-500" />
-            <span className="text-xs text-gray-600">
-              {peptide.intensity?.toFixed(0) || 'N/A'}
-            </span>
-          </div>
+        <div className="flex-1">
+          <h4 className="text-lg font-bold text-white tracking-wide">
+            Peptide #{index + 1}
+          </h4>
+          <p className="text-purple-200">
+            Sequence: <span className="font-semibold text-white">{sequence || 'N/A'}</span>
+          </p>
+          <p className="text-purple-200">
+            Charge: <span className="font-semibold text-white">{charge ?? '—'}</span>
+          </p>
+          <p className="text-purple-200">
+            Precursor m/z: <span className="font-semibold text-white">{precursorMz ?? '—'}</span>
+          </p>
+          <p className="text-purple-200">
+            Score: <span className="font-semibold text-white">{score ?? '—'}</span>
+          </p>
         </div>
       </div>
     </div>
   );
 };
-
 
 export default PeptideCard;
