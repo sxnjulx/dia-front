@@ -166,15 +166,15 @@ const SpectralSearchApp = () => {
     setIsModalOpen(true);
   };
 
-  const handleSearchNearest = async (peptide) => {
-    setIsSearching(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setSearchResults(transformResponse(mockSearchResults));
-    setActivePeptideIndex(selectedIndex);
-    setIsSearching(false);
-    setIsModalOpen(false);
-  };
+  // const handleSearchNearest = async (peptide) => {
+  //   setIsSearching(true);
+  //   // Simulate API call
+  //   await new Promise(resolve => setTimeout(resolve, 2000));
+  //   setSearchResults(transformResponse(mockSearchResults));
+  //   setActivePeptideIndex(selectedIndex);
+  //   setIsSearching(false);
+  //   setIsModalOpen(false);
+  // };
 
   function transformResponse(data) {
     const xArray = data.pca_plot_data.neighbors.x;
@@ -192,37 +192,37 @@ const SpectralSearchApp = () => {
   }
 
 
-//   const handleSearchNearest = async (peptide) => {
-//   setIsSearching(true);
+  const handleSearchNearest = async (peptide) => {
+  setIsSearching(true);
 
-//   try {
-//     const response = await fetch('http://localhost:5000/query_index', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({
-//         vector: peptide.vector,
-//         k: peptide.k,
-//         use_gpu: peptide.use_gpu
-//       })
-//     });
+  try {
+    const response = await fetch('http://localhost:5000/query_index', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        vector: peptide.vector,
+        k: peptide.k,
+        use_gpu: peptide.use_gpu
+      })
+    });
 
-//     if (!response.ok) {
-//       throw new Error('Failed to search nearest peptides');
-//     }
+    if (!response.ok) {
+      throw new Error('Failed to search nearest peptides');
+    }
 
-//     const data = await response.json();
-//     setSearchResults(data.results); // backend should return `{ results: [...] }`
-//     setActivePeptideIndex(selectedIndex); // make sure selectedIndex is in scope
-//     setIsModalOpen(false);
-//   } catch (error) {
-//     console.error('Search error:', error);
-//     // Optionally show a toast or UI message
-//   } finally {
-//     setIsSearching(false);
-//   }
-// };
+    const data = await response.json();
+    setSearchResults(transformResponse(data)); // backend should return `{ results: [...] }`
+    setActivePeptideIndex(selectedIndex); // make sure selectedIndex is in scope
+    setIsModalOpen(false);
+  } catch (error) {
+    console.error('Search error:', error);
+    // Optionally show a toast or UI message
+  } finally {
+    setIsSearching(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
