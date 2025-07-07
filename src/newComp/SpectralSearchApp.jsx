@@ -60,8 +60,8 @@ const SpectralSearchApp = () => {
 //   const handleLoadFeatureVectors = async () => {
 //   setIsLoading(true);
 //   try {
-//     const response = await fetch('http://localhost:5000/query_index', {
-//       method: 'POST',
+//     const response = await fetch('http://localhost:5000/get_extracted_feature_vectors', {
+//       method: 'GET',
 //       headers: {
 //         'Content-Type': 'application/json',
 //       },
@@ -98,6 +98,38 @@ const SpectralSearchApp = () => {
     setIsSearching(false);
     setIsModalOpen(false);
   };
+
+//   const handleSearchNearest = async (peptide) => {
+//   setIsSearching(true);
+
+//   try {
+//     const response = await fetch('http://localhost:5000/query_index', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({
+//         vector: peptide.vector,
+//         k: peptide.k,
+//         use_gpu: peptide.use_gpu
+//       })
+//     });
+
+//     if (!response.ok) {
+//       throw new Error('Failed to search nearest peptides');
+//     }
+
+//     const data = await response.json();
+//     setSearchResults(data.results); // backend should return `{ results: [...] }`
+//     setActivePeptideIndex(selectedIndex); // make sure selectedIndex is in scope
+//     setIsModalOpen(false);
+//   } catch (error) {
+//     console.error('Search error:', error);
+//     // Optionally show a toast or UI message
+//   } finally {
+//     setIsSearching(false);
+//   }
+// };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
