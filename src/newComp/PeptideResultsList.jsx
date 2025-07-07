@@ -10,6 +10,7 @@ const PeptideResultsList = ({ results }) => {
           <div key={result.id} className="border-b border-gray-200 p-4 hover:bg-gray-50 transition-colors">
             <div className="flex justify-between items-start mb-2">
               <div>
+                <h4 className="font-semibold text-gray-800">neighbour : {result.neighborsID}</h4>
                 <h4 className="font-semibold text-gray-800">ID: {result.id}</h4>
                 <p className="text-sm text-gray-600 mt-1">{result.metadata}</p>
               </div>

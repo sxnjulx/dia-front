@@ -181,6 +181,7 @@ const SpectralSearchApp = () => {
     const yArray = data.pca_plot_data.neighbors.y;
     data.results = data.results.map((item, index) => ({
       id: item.id,
+      neighborsID: index + 1, // Assuming neighbors start from 1
       metadata: item["metadata(USI)"],
       distance: item.distance,
       x: xArray[index],

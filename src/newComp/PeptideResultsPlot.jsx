@@ -38,6 +38,11 @@ const PeptideResultsPlot = ({ results }) => {
     y: query.y,
     id: 'Query Peptide'
   };
+  
+  
+
+  console.log("Neighbor Points:", neighborPoints);
+  console.log("Query Point:", queryPoint);
 
   return (
     <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
@@ -61,19 +66,22 @@ const PeptideResultsPlot = ({ results }) => {
               tick={{ fontSize: 12 }}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Scatter
-              name="Query"
-              data={[queryPoint]}
-              fill="#34D399" // green
-              stroke="#059669"
-              r={8}
-            />
+            
             <Scatter
               name="Neighbors"
               data={neighborPoints}
               fill="#818CF8" // purple
               stroke="#6366F1"
               r={5}
+              shape="square"
+            />
+
+            <Scatter
+              name="Query"
+              data={[queryPoint]}
+              fill="#34D399" // green
+              stroke="#059669"
+              r={8}
             />
           </ScatterChart>
         </ResponsiveContainer>
