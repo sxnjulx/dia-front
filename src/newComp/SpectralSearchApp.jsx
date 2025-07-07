@@ -57,6 +57,32 @@ const SpectralSearchApp = () => {
     setIsLoading(false);
   };
 
+//   const handleLoadFeatureVectors = async () => {
+//   setIsLoading(true);
+//   try {
+//     const response = await fetch('http://localhost:5000/query_index', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({}) // Add any body content if needed
+//     });
+
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+
+//     const data = await response.json();
+//     setFeatureVectors(data.peptidefeatureVector);
+//   } catch (error) {
+//     console.error('Error fetching feature vectors:', error);
+//     // Optionally show error to user
+//   } finally {
+//     setIsLoading(false);
+//   }
+// };
+
+
   const handleCardClick = (peptide, index) => {
     setSelectedPeptide(peptide);
     setSelectedIndex(index);
