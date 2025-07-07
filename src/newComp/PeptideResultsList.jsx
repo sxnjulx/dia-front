@@ -15,12 +15,12 @@ const PeptideResultsList = ({ results }) => {
               </div>
               <div className="text-right">
                 <div className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-semibold">
-                  Distance: {result.distance.toFixed(4)}
+                  Similarity: {result.distance.toFixed(17)}
                 </div>
               </div>
             </div>
             <div className="text-xs text-gray-500">
-              Position: ({result.x.toFixed(3)}, {result.y.toFixed(3)})
+              Position: ({result.x.toFixed(17)}, {result.y.toFixed(17)})
             </div>
           </div>
         ))}

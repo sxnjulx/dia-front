@@ -21,7 +21,7 @@ const PeptideCard = ({ peptide, index, onClick, isActive }) => {
         <Eye className={`w-5 h-5 ${isActive ? 'text-blue-500' : 'text-gray-500'}`} />
       </div>
       <div className="text-sm text-gray-600 mb-2">
-        <span className="font-medium">Preview:</span> {preview.map(val => val.toFixed(3)).join(', ')}...
+        <span className="font-medium">Preview:</span> {preview.map(val => val.toFixed(10)).join(', ')}...
       </div>
       <div className="flex items-center text-xs text-gray-500">
         <Zap className="w-4 h-4 mr-1" />

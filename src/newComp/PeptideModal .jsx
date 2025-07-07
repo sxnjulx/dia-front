@@ -42,7 +42,7 @@ const PeptideModal = ({
               {peptide.vector.map((value, index) => (
                 <div key={index} className="bg-white p-2 rounded text-center text-sm font-mono border">
                   <span className="text-gray-500 text-xs">#{index + 1}</span>
-                  <div className="font-semibold text-gray-800">{value.toFixed(4)}</div>
+                  <div className="font-semibold text-gray-800">{value.toFixed(7)}</div>
                 </div>
               ))}
             </div>

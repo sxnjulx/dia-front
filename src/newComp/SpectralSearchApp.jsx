@@ -27,14 +27,91 @@ const mockFeatureVectors = {
 };
 
 const mockSearchResults = {
-  status: "success",
-  results: [
-    { id: "2320164003", metadata: "mzspec:Project_ID:0.mgf:index:6", distance: 0.8742, x: 0.123, y: 0.456 },
-    { id: "2320164004", metadata: "mzspec:Project_ID:1.mgf:index:12", distance: 0.7623, x: 0.789, y: 0.321 },
-    { id: "2320164005", metadata: "mzspec:Project_ID:2.mgf:index:18", distance: 0.6891, x: 0.456, y: 0.789 },
-    { id: "2320164006", metadata: "mzspec:Project_ID:3.mgf:index:24", distance: 0.5234, x: 0.654, y: 0.147 },
-    { id: "2320164007", metadata: "mzspec:Project_ID:4.mgf:index:30", distance: 0.4567, x: 0.258, y: 0.963 }
-  ]
+    "pca_plot_data": {
+        "neighbors": {
+            "x": [
+                0.0077086822129786015,
+                0.007681503426283598,
+                0.00774935819208622,
+                0.007746020797640085,
+                0.007705117575824261,
+                0.0077195363119244576,
+                0.007667007856070995,
+                0.007720880676060915,
+                0.007676231674849987,
+                0.007729255594313145
+            ],
+            "y": [
+                -0.0022758215200155973,
+                -0.002277480671182275,
+                -0.002255193656310439,
+                -0.0022824350744485855,
+                -0.0022493612486869097,
+                -0.002277734223753214,
+                -0.0022645192220807076,
+                -0.0022573042660951614,
+                -0.0022737537510693073,
+                -0.0022995455656200647
+            ]
+        },
+        "query": {
+            "x": 0.007706127595156431,
+            "y": -0.002272500190883875
+        }
+    },
+    "results": [
+        {
+            "distance": 1.0,
+            "id": "2320164003",
+            "metadata(USI)": "mzspec:Project_ID:0.mgf:index:6"
+        },
+        {
+            "distance": 0.9999999403953552,
+            "id": "1907645907",
+            "metadata(USI)": "mzspec:Project_ID:9.mgf:index:20"
+        },
+        {
+            "distance": 0.9999999403953552,
+            "id": "3504276988",
+            "metadata(USI)": "mzspec:Project_ID:4.mgf:index:3915"
+        },
+        {
+            "distance": 0.9999999403953552,
+            "id": "2295258494",
+            "metadata(USI)": "mzspec:Project_ID:7.mgf:index:30607"
+        },
+        {
+            "distance": 0.9999999403953552,
+            "id": "822742232",
+            "metadata(USI)": "mzspec:Project_ID:8.mgf:index:3969"
+        },
+        {
+            "distance": 0.9999999403953552,
+            "id": "3442172327",
+            "metadata(USI)": "mzspec:Project_ID:1.mgf:index:30750"
+        },
+        {
+            "distance": 0.9999999403953552,
+            "id": "3059946909",
+            "metadata(USI)": "mzspec:Project_ID:4.mgf:index:17418"
+        },
+        {
+            "distance": 0.9999999403953552,
+            "id": "1530567546",
+            "metadata(USI)": "mzspec:Project_ID:2.mgf:index:3989"
+        },
+        {
+            "distance": 0.9999999403953552,
+            "id": "3261923045",
+            "metadata(USI)": "mzspec:Project_ID:8.mgf:index:17512"
+        },
+        {
+            "distance": 0.9999999403953552,
+            "id": "2740824660",
+            "metadata(USI)": "mzspec:Project_ID:5.mgf:index:31122"
+        }
+    ],
+    "status": "success"
 };
 
 
@@ -93,11 +170,27 @@ const SpectralSearchApp = () => {
     setIsSearching(true);
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000));
-    setSearchResults(mockSearchResults.results);
+    setSearchResults(transformResponse(mockSearchResults));
     setActivePeptideIndex(selectedIndex);
     setIsSearching(false);
     setIsModalOpen(false);
   };
+
+  function transformResponse(data) {
+    const xArray = data.pca_plot_data.neighbors.x;
+    const yArray = data.pca_plot_data.neighbors.y;
+    data.results = data.results.map((item, index) => ({
+      id: item.id,
+      metadata: item["metadata(USI)"],
+      distance: item.distance,
+      x: xArray[index],
+      y: yArray[index]
+    })); 
+    console.log("Transformed results:", data);
+
+    return data
+  }
+
 
 //   const handleSearchNearest = async (peptide) => {
 //   setIsSearching(true);
@@ -161,13 +254,20 @@ const SpectralSearchApp = () => {
 
             {/* Right Column - Results */}
             <div className="space-y-8">
-              {searchResults.length > 0 && (
+              {searchResults?.results?.length > 0 && (
                 <>
-                  <PeptideResultsList results={searchResults} sourcePeptideIndex={activePeptideIndex} />
-                  <PeptideResultsPlot results={searchResults} sourcePeptideIndex={activePeptideIndex} />
+                  <PeptideResultsList
+                    results={searchResults.results}
+                    sourcePeptideIndex={activePeptideIndex}
+                  />
+                  <PeptideResultsPlot
+                    results={searchResults.pca_plot_data}
+                    sourcePeptideIndex={activePeptideIndex}
+                  />
                 </>
               )}
             </div>
+
           </div>
         )}
 
